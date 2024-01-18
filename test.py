@@ -48,7 +48,7 @@ st.markdown(
 
 
 # Display the fixed text
-st.markdown('<div class="fixed-text">This text is fixed on the screen</div>', unsafe_allow_html=True)
+st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
