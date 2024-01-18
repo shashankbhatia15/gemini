@@ -29,7 +29,7 @@ import streamlit as st
 header = st.container()
 with header:
     st.title("My Streamlit App")
-header.sticky()
+
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
