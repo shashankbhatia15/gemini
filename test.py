@@ -29,21 +29,20 @@ import streamlit as st
 header = st.container()
 with header:
     st.title("My Streamlit App")
+st.experimental_set_query_params(fixed_header=True)
 
-main_content = st.container()
-with main_content:
-    if "messages" not in st.session_state:
-        st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
-    
-    for msg in st.session_state.messages:
-        st.chat_message(msg["role"]).write(msg["content"])
-    
-    if prompt := st.chat_input():
-    
-    
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        st.chat_message("user").write(prompt)
-        response = chat.send_message(prompt)
-        msg = response
-        st.session_state.messages.append({"role": "assistant", "content": msg.text})
-        st.chat_message("assistant").write(msg.text)
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+
+if prompt := st.chat_input():
+
+
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = chat.send_message(prompt)
+    msg = response
+    st.session_state.messages.append({"role": "assistant", "content": msg.text})
+    st.chat_message("assistant").write(msg.text)
