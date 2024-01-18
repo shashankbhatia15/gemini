@@ -35,6 +35,8 @@ st.markdown(
         left: 520px;
         background-color: white;
         padding: 10px;
+        font-size: 24px; /* Adjust the font size as needed */
+        font-weight: bold; /* Make the text bold */
         border: 1px solid #ccc;
         border-radius: 50px;
         z-index: 1;
