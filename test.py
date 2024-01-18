@@ -26,22 +26,10 @@ chat = model.start_chat(history=[])
 import streamlit as st
 
 # st.title("💬 ShankGPT")
-st.markdown(
-    """
-    <style>
-    #MainMenu {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 999;
-    }
-    </style>
-    <div id="MainMenu">
-        <h1>Streamlit App</h1>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+header = st.container()
+with header:
+    st.title("My Streamlit App")
+header.sticky()
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
