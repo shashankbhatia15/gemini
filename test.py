@@ -1,23 +1,60 @@
-import os
+
+
+import pathlib
+import textwrap
+
+import google.generativeai as genai
 import streamlit as st
-gemini_key = os.environ.get('GEMINI_KEY')
+# Import your question-answering code here
 
-# Now you can use the gemini_key in your Python project
-# st.write(gemini_key)
-import requests
 
-# Replace these values with your own PAT and secret name
-pat = "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"
-secret_name = "GEMINI_KEY"
+# Used to securely store your API key
+# from google.colab import userdata
 
-# Make a request to the GitHub Secrets API to retrieve the secret
-response = requests.get(
-    f"https://api.github.com/repos/YOUR_REPOSITORY/secrets/{secret_name}",
-    headers={"Authorization": f"token {pat}"},
+
+
+
+# Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
+GOOGLE_API_KEY='AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
+
+genai.configure(api_key=GOOGLE_API_KEY)
+
+model = genai.GenerativeModel('gemini-pro')
+chat = model.start_chat(history=[])
+# chat
+# First
+import streamlit as st
+
+# st.title("💬 ShankGPT")
+st.markdown(
+    """
+    <style>
+    #MainMenu {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+    }
+    </style>
+    <div id="MainMenu">
+        <h1>Streamlit App</h1>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
-# Parse the response to extract the secret value
-secret_value = response.json()["value"]
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
-# Use the secret value in your code
-print(secret_value)
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+
+if prompt := st.chat_input():
+
+
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = chat.send_message(prompt)
+    msg = response
+    st.session_state.messages.append({"role": "assistant", "content": msg.text})
+    st.chat_message("assistant").write(msg.text)
