@@ -25,7 +25,29 @@ chat = model.start_chat(history=[])
 # First
 import streamlit as st
 
-st.title("💬 ShankGPT")
+# st.title("💬 ShankGPT")
+st.markdown(
+    """
+    <style>
+    .fixed-text {
+        position: fixed;
+        top: 60px;
+        left: 520px;
+        background-color: white;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 50px;
+        z-index: 1;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
+# Display the fixed text
+st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
