@@ -30,10 +30,14 @@ import streamlit as st
 st.markdown(
     """
     <style>
-    .fixed-header {
+    .fixed-text {
         position: fixed;
-        top: 60px; /* Adjust the top position as needed */
-        left: 20px;
+        top: 60px;
+        left: 120px;
+        background-color: white;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
         z-index: 1;
     }
     </style>
