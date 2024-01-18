@@ -33,7 +33,7 @@ st.markdown(
     .fixed-text {
         position: fixed;
         top: 60px;
-        left: 120px;
+        left: 1120px;
         background-color: white;
         padding: 10px;
         border: 1px solid #ccc;
@@ -49,7 +49,7 @@ st.markdown(
 st.markdown('<h1 class="fixed-header">Fixed Header</h1>', unsafe_allow_html=True)
 
 # Display the fixed text
-st.markdown('<div class="fixed-text">This text is fixed on the screen</div>', unsafe_allow_html=True)
+# st.markdown('<div class="fixed-text">This text is fixed on the screen</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
