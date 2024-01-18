@@ -33,7 +33,7 @@ st.markdown(
         position: fixed;
         top: 60px;
         left: 520px;
-        background-color: white;
+        background-color: grey;
         padding: 10px;
         font-size: 24px; /* Adjust the font size as needed */
         font-weight: bold; /* Make the text bold */
