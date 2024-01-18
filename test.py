@@ -30,20 +30,19 @@ import streamlit as st
 st.markdown(
     """
     <style>
-    .fixed-text {
+    .fixed-header {
         position: fixed;
-        top: 20px;
+        top: 60px; /* Adjust the top position as needed */
         left: 20px;
-        background-color: white;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
         z-index: 1;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
+# Display the fixed header
+st.markdown('<h1 class="fixed-header">Fixed Header</h1>', unsafe_allow_html=True)
 
 # Display the fixed text
 st.markdown('<div class="fixed-text">This text is fixed on the screen</div>', unsafe_allow_html=True)
