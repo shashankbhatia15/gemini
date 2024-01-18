@@ -37,7 +37,7 @@ st.markdown(
         background-color: white;
         padding: 10px;
         border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 50px;
         z-index: 1;
     }
     </style>
