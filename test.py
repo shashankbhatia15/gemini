@@ -26,10 +26,27 @@ chat = model.start_chat(history=[])
 import streamlit as st
 
 # st.title("💬 ShankGPT")
-header = st.container()
-with header:
-    st.title("My Streamlit App")
-st.experimental_set_query_params(fixed_header=True)
+# Inject custom CSS to keep the text fixed
+st.markdown(
+    """
+    <style>
+    .fixed-text {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: white;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        z-index: 1;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Display the fixed text
+st.markdown('<div class="fixed-text">This text is fixed on the screen</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
