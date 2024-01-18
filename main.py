@@ -32,7 +32,7 @@ st.markdown(
     .fixed-text {
         position: fixed;
         top: 60px;
-        left: 520px;
+        left: 20px;
         background-color: grey;
         padding: 10px;
         font-size: 24px; /* Adjust the font size as needed */
