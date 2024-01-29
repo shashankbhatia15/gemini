@@ -20,7 +20,7 @@ GOOGLE_API_KEY='AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro')
-chat = model.start_chat(history=[])
+chat = model.start_chat(history=[],stream = True)
 # chat
 # First
 import streamlit as st
