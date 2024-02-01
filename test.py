@@ -1,67 +1,97 @@
-
-
-import pathlib
-import textwrap
-
-import google.generativeai as genai
+import os
+from dotenv import load_dotenv
 import streamlit as st
-# Import your question-answering code here
+import vertexai
+from vertexai.preview.generative_models import GenerativeModel
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+from typing import Any, List, Mapping, Optional
+from langchain.callbacks.manager import CallbackManagerForLLMRun
+from langchain_core.language_models.llms import LLM
+from vertexai.preview.generative_models import GenerativeModel
 
 
-# Used to securely store your API key
-# from google.colab import userdata
+class GeminiProLLM(LLM):
+    @property
+    def _llm_type(self) -> str:
+        return "gemini-pro"
+
+    def _call(
+        self,
+        prompt: str,
+        stop: Optional[List[str]] = None,
+        run_manager: Optional[CallbackManagerForLLMRun] = None,
+        **kwargs: Any,
+    ) -> str:
+        if stop is not None:
+            raise ValueError("stop kwargs are not permitted.")
+        
+        gemini_pro_model = GenerativeModel("gemini-pro")
+
+        
+        model_response = gemini_pro_model.generate_content(
+            prompt, 
+            generation_config={"temperature": 0.1}
+        )
+        print(model_response)
+
+        if len(model_response.candidates[0].content.parts) > 0:
+            return model_response.candidates[0].content.parts[0].text
+        else:
+            return "<No answer given by Gemini Pro>"
+
+    @property
+    def _identifying_params(self) -> Mapping[str, Any]:
+        """Get the identifying parameters."""
+        return {"model_id": "gemini-pro", "temperature": 0.1}
 
 
+# Initialize Vertex AI
+load_dotenv()
+project_name = os.getenv("VERTEXAI_PROJECT")
+vertexai.init(project=project_name)
 
+# Setting page title and header
+st.set_page_config(page_title="Gemini Pro Chatbot", page_icon=":robot_face:")
+st.markdown("<h1 style='text-align: center;'>Gemini Pro Chatbot</h1>", unsafe_allow_html=True)
 
-# Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
-GOOGLE_API_KEY='AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
+# Load chat model
+@st.cache_resource
+def load_chain():
+    # llm = ChatVertexAI(model_name="chat-bison@002")
+    llm = GeminiProLLM()
+    memory = ConversationBufferMemory()
+    chain = ConversationChain(llm=llm, memory=memory)
+    return chain
 
-genai.configure(api_key=GOOGLE_API_KEY)
+chatchain = load_chain()
 
-model = genai.GenerativeModel('gemini-pro')
-chat = model.start_chat(history=[])
-# chat
-# First
-import streamlit as st
+# Initialise session state variables
+if 'messages' not in st.session_state:
+    st.session_state['messages'] = []
 
-# st.title("💬 ShankGPT")
-# Inject custom CSS to keep the text fixed
-st.markdown(
-    """
-    <style>
-    .fixed-text {
-        position: fixed;
-        top: 60px;
-        left: 520px;
-        background-color: white;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 50px;
-        z-index: 1;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.sidebar.title("Sidebar")
+clear_button = st.sidebar.button("Clear Conversation", key="clear")
 
+# Reset conversation
+if clear_button:
+    st.session_state['messages'] = []
 
+# Display previous messages
+for message in st.session_state['messages']:
+    role = message["role"]
+    content = message["content"]
+    with st.chat_message(role):
+        st.markdown(content)
 
-# Display the fixed text
-st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
+# Chat input
+prompt = st.chat_input("You:")
+if prompt:
+    st.session_state['messages'].append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
-
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
-
-if prompt := st.chat_input():
-
-
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
-    response = chat.send_message(prompt)
-    msg = response
-    st.session_state.messages.append({"role": "assistant", "content": msg.text})
-    st.chat_message("assistant").write(msg.text)
+    response = chatchain(prompt)["response"]
+    st.session_state['messages'].append({"role": "assistant", "content": response})
+    with st.chat_message("assistant"):
+        st.markdown(response)
