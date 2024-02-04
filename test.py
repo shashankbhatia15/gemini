@@ -1,76 +1,68 @@
-import streamlit as st
-import os
+
+
+import pathlib
+import textwrap
+
 import google.generativeai as genai
+import streamlit as st
+# Import your question-answering code here
 
 
-st.title("Chat - Gemini Bot")
+# Used to securely store your API key
+# from google.colab import userdata
 
 
-# Set Google API key
-os.environ['GOOGLE_API_KEY'] = "AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4"
-genai.configure(api_key = os.environ['GOOGLE_API_KEY'])
 
 
-# Create the Model
+# Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
+GOOGLE_API_KEY='AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
+
+genai.configure(api_key=GOOGLE_API_KEY)
+
 model = genai.GenerativeModel('gemini-pro')
+chat = model.start_chat(history=[])
+# chat
+# First
+import streamlit as st
+
+# st.title("💬 ShankGPT")
+st.markdown(
+    """
+    <style>
+    .fixed-text {
+        position: fixed;
+        top: 60px;
+        left: 20px;
+        background-color: grey;
+        padding: 10px;
+        font-size: 24px; /* Adjust the font size as needed */
+        font-weight: bold; /* Make the text bold */
+        border: 1px solid #ccc;
+        border-radius: 50px;
+        z-index: 1;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
-# Initialize chat history
+
+# Display the fixed text
+st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
+
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role":"assistant",
-            "content":"Ask me Anything"
-        }
-    ]
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+
+if prompt := st.chat_input():
 
 
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-
-# Process and store Query and Response
-def llm_function(query):
-    
-    # Storing the User Message
-    st.session_state.messages.append(
-        {
-            "role":"user",
-            "content": query
-        }
-    )
-
-
-    # Displaying the Assistant Message
-    with st.chat_message("assistant"):
-        st.markdown(response.text)
-
-    response = model.generate_content(st.session_state.messages)
-
-
-    
-
-    # Storing the User Message
-    st.session_state.messages.append(
-        {
-            "role":"assistant",
-            "content": response.text
-        }
-    )
-
-
-   
-# Accept user input
-query = st.chat_input("What is up?")
-
-
-# Calling the Function when Input is Provided
-if query:
-    # Displaying the User Message
-    with st.chat_message("user"):
-        st.markdown(query)
-
-
-    llm_function(query)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = chat.send_message(prompt)
+    msg = response
+    st.session_state.messages.append({"role": "assistant", "content": msg.text})
+    st.chat_message("assistant").write(msg.text)
