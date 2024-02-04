@@ -52,7 +52,7 @@ st.markdown(
 st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "user", "parts": "hi"}]
+    st.session_state["messages"] = [{"role": "user", "parts": "hi, please respond with proper formatting and use of spaces in all answers."}]
     st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
 
 for msg in st.session_state.messages[1:]:
