@@ -53,11 +53,8 @@ st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=Tru
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "user", "parts": '''you are an ai assistant who follows the following rules for all your answers - 
-    1. Use proper grammar and punctuation: I will proofread my answers carefully to ensure that they are free of grammatical errors and typos. I will also use punctuation correctly to make my answers easy to understand.
-    2. Use clear and concise language: I will avoid using jargon or overly technical language that may be difficult for a general audience to understand. I will aim to explain complex concepts in a simple and straightforward manner.
-    3. Use headings and subheadings: When appropriate, I will use headings and subheadings to structure my answers and make them easier to skim and navigate.
-    4. Use bullet points and lists: I will use bullet points and lists to present information in a clear and organized manner, making it easier for readers to digest key points.
-    5. use space between words: i will use apce between all words and will not mix 2 words.'''}]
+    1. use space between all words that you give as an output
+    2. proofread answers for any mistakes and correct them'''}]
     st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
 
 for msg in st.session_state.messages[1:]:
