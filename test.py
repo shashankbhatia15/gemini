@@ -20,7 +20,7 @@ GOOGLE_API_KEY='AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro')
-chat = model.start_chat(history=[])
+# chat = model.start_chat(history=[])
 # chat
 # First
 import streamlit as st
@@ -52,17 +52,27 @@ st.markdown(
 st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+    st.session_state["messages"] = [{"role": "user", "parts": "hi"}]
+    st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+for msg in st.session_state.messages[1:]:
+    st.chat_message(msg["role"]).write(msg["parts"])
 
 if prompt := st.chat_input():
 
 
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "parts": prompt})
     st.chat_message("user").write(prompt)
-    response = chat.send_message(st.chat_message)
+    # st.write(st.session_state.to_dict()['messages'])
+
+    # response = model.generate_content(prompt)
+    response = model.generate_content(st.session_state.to_dict()['messages'])
+    
     msg = response
-    st.session_state.messages.append({"role": "assistant", "content": msg.text})
+    st.session_state.messages.append({"role": "model", "parts": msg.text})
     st.chat_message("assistant").write(msg.text)
+
+
+# z=st.session_state.to_dict()["messages"]
+# st.write(type(st.session_state.to_dict()['messages'][2]))
+# st.write(st.session_state.to_dict()['messages'])
