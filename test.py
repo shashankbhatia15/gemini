@@ -62,7 +62,7 @@ if prompt := st.chat_input():
 
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    response = chat.send_message(prompt)
+    response = chat.send_message(st.chat_message)
     msg = response
     st.session_state.messages.append({"role": "assistant", "content": msg.text})
     st.chat_message("assistant").write(msg.text)
