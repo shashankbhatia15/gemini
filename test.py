@@ -33,14 +33,7 @@ for message in st.session_state.messages:
 
 # Process and store Query and Response
 def llm_function(query):
-    response = model.generate_content(query)
-
-
-    # Displaying the Assistant Message
-    with st.chat_message("assistant"):
-        st.markdown(response.text)
-
-
+    
     # Storing the User Message
     st.session_state.messages.append(
         {
@@ -49,6 +42,15 @@ def llm_function(query):
         }
     )
 
+
+    # Displaying the Assistant Message
+    with st.chat_message("assistant"):
+        st.markdown(response.text)
+
+    response = model.generate_content(st.session_state.messages)
+
+
+    
 
     # Storing the User Message
     st.session_state.messages.append(
