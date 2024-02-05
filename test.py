@@ -53,7 +53,7 @@ st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=Tru
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant who follows the following rules for all your answers - 
-    1. give outputs in proper readable formats always
+    1. give outputs in proper readable formats. use space between each word you output. 
     2. pformat all the codes in a proper readable format
     '''}]
     
