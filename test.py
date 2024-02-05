@@ -55,9 +55,9 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant who follows the following rules for all your answers - 
     1. use space between all words that you give as an output
     2. pformat all the codes in a proper manner
-    respond how may I assist you if you understand.'''}]
-    response = model.generate_content(st.session_state.to_dict()['messages'])
+    respond "how may I assist you" if you understand.'''}]
     
+    response = model.generate_content(st.session_state.to_dict()['messages'])
     msg = response
     st.session_state.messages.append({"role": "model", "parts": msg.text})
     st.chat_message("assistant").write(msg.text)
