@@ -52,10 +52,13 @@ st.markdown(
 st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant who follows the following rules for all your answers - 
-    1. give outputs in proper readable formats. use space between each word you output. 
-    2. pformat all the codes in a proper readable format
+    st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant
     '''}]
+    
+    # [{"role": "user", "parts": '''you are an AI assistant who follows the following rules for all your answers - 
+    # 1. give outputs in proper readable formats. use space between each word you output. 
+    # 2. pformat all the codes in a proper readable format
+    # '''}]
     
     # response = model.generate_content(st.session_state.to_dict()['messages'])
     # msg = response.text
