@@ -64,7 +64,7 @@ if "messages" not in st.session_state:
     
     # st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
 
-for msg in st.session_state.messages[1:]:
+for msg in st.session_state.messages[2:]:
     st.chat_message(msg["role"]).write(msg["parts"])
 
 if prompt := st.chat_input():
