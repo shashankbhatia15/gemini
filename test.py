@@ -53,18 +53,18 @@ st.markdown('<div class="fixed-text">💬 ShankGPT</div>', unsafe_allow_html=Tru
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant who follows the following rules for all your answers - 
-    1. use space between all words that you give as an output
-    2. pformat all the codes in a proper manner
-    respond "how may I assist you" if you understand.'''}]
+    1. give outputs in proper readable formats always
+    2. pformat all the codes in a proper readable format
+    '''}]
     
-    response = model.generate_content(st.session_state.to_dict()['messages'])
-    msg = response.text
-    st.session_state.messages.append({"role": "model", "parts": msg})
-    st.chat_message("assistant").write(msg)
+    # response = model.generate_content(st.session_state.to_dict()['messages'])
+    # msg = response.text
+    # st.session_state.messages.append({"role": "model", "parts": msg})
+    # st.chat_message("assistant").write(msg)
     
-    # st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
+    st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
 
-for msg in st.session_state.messages[2:]:
+for msg in st.session_state.messages[1:]:
     st.chat_message(msg["role"]).write(msg["parts"])
 
 if prompt := st.chat_input():
