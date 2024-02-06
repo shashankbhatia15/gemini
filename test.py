@@ -14,9 +14,10 @@ import streamlit as st
 
 
 
-# Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
+
 GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
-#'AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
+# GOOGLE_API_KEY=st.secrets["GOOGLE_API_KEY"] #if you save secrets in streamlit directly.
+
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
