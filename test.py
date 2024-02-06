@@ -1,4 +1,4 @@
-
+import os
 
 import pathlib
 import textwrap
@@ -15,7 +15,8 @@ import streamlit as st
 
 
 # Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
-GOOGLE_API_KEY='AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
+GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
+#'AIzaSyDoBhE1leGM_nBGdJPLgDQx46OyViTn2Q4'
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
