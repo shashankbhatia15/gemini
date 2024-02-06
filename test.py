@@ -15,7 +15,7 @@ import streamlit as st
 
 
 
-GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
+GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY') 
 # GOOGLE_API_KEY=st.secrets["GOOGLE_API_KEY"] #if you save secrets in streamlit directly.
 
 
