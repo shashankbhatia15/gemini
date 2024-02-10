@@ -5,7 +5,6 @@ import textwrap
 
 import google.generativeai as genai
 import streamlit as st
-
 # Import your question-answering code here
 
 
@@ -15,9 +14,8 @@ import streamlit as st
 
 
 
-GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY') 
-# GOOGLE_API_KEY=st.secrets["GOOGLE_API_KEY"] #if you save secrets in streamlit directly.
 
+GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY') 
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro')
