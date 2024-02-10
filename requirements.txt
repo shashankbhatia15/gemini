@@ -11,7 +11,7 @@ google-generativeai==0.3.2
 grpcio==1.60.0
 grpcio-status==1.60.0
 #idna==3.6
-proto-plus==1.23.0
+#proto-plus==1.23.0
 #protobuf==4.25.2
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
