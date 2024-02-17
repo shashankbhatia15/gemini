@@ -80,4 +80,4 @@ if prompt := st.chat_input():
     st.chat_message("assistant").write(msg.text)
 
     st.session_state['history']=chat.history
-    st.write(chat.history)
+    # st.write(chat.history)
