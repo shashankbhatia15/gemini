@@ -1,8 +1,7 @@
 import os
 
-import pathlib
-import textwrap
 
+from dotenv import load_dotenv
 import google.generativeai as genai
 import streamlit as st
 # Import your question-answering code here
@@ -15,13 +14,12 @@ import streamlit as st
 
 
 
-GOOGLE_API_KEY=os.getenv('GEMINI_KEY') 
-# GOOGLE_API_KEY=st.secrets["GOOGLE_API_KEY"] #if you save secrets in streamlit directly.
+load_dotenv()
 
-
+GOOGLE_API_KEY= os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.0-pro-001')
 # chat = model.start_chat(history=[])
 # chat
 # First
@@ -54,19 +52,10 @@ st.markdown(
 st.markdown('<div class="fixed-text">💬 ShankCopilot</div>', unsafe_allow_html=True)
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant
+    st.session_state["messages"] = [{"role": "user", "parts": '''you are an AI assistant. 
     '''}]
-    
-    # [{"role": "user", "parts": '''you are an AI assistant who follows the following rules for all your answers - 
-    # 1. give outputs in proper readable formats. use space between each word you output. 
-    # 2. pformat all the codes in a proper readable format
-    # '''}]
-    
-    # response = model.generate_content(st.session_state.to_dict()['messages'])
-    # msg = response.text
-    # st.session_state.messages.append({"role": "model", "parts": msg})
-    # st.chat_message("assistant").write(msg)
-    
+
+
     st.session_state.messages.append({"role": "model", "parts": "How can I help you?"})
 
 for msg in st.session_state.messages[1:]:
@@ -75,18 +64,21 @@ for msg in st.session_state.messages[1:]:
 if prompt := st.chat_input():
 
 
-    st.session_state.messages.append({"role": "user", "parts": prompt})
+    st.session_state.messages.append({"role": "user", "parts": prompt + ' (give reply in a proper readable format)'})
+
+    # ' - use spaces between words in your reply.'
     st.chat_message("user").write(prompt)
     # st.write(st.session_state.to_dict()['messages'])
 
     # response = model.generate_content(prompt)
-    response = model.generate_content(st.session_state.to_dict()['messages'])
-    
+    # st.write(st.session_state.to_dict()['messages'][-1])
+    response = model.generate_content(st.session_state.to_dict()['messages'][-5:])
+
     msg = response
     st.session_state.messages.append({"role": "model", "parts": msg.text})
     st.chat_message("assistant").write(msg.text)
 
 
 # z=st.session_state.to_dict()["messages"]
-# st.write(type(st.session_state.to_dict()['messages'][2]))
-# st.write(st.session_state.to_dict()['messages'])
+# st.write(type(st.session_state.to_dict()['messages']))
+# st.write(st.session_state.to_dict()['messages'][-4:])
