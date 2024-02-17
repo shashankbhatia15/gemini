@@ -20,9 +20,7 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
-# chat
-# First
-import streamlit as st
+
 
 # st.title("💬 ShankGPT")
 st.markdown(
