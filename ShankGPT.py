@@ -7,6 +7,25 @@ load_dotenv()
 
 GOOGLE_API_KEY= os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
+
+with st.sidebar:
+
+    # Display the logo
+    st.image("logo/logo15.png")
+
+    # Add a header for the model options
+    st.header("Model Options")
+
+    # Create a selectbox for the model type
+    model_name = st.selectbox("Model Type", ["gemini-pro","gemini-1.0-pro-latest", "gemini-1.0-pro", "gemini-1.0-pro-001"])
+#best model
+# model_name = 'gemini-1.0-pro-latest'
+#quite straightforward - not eq
+# model_name = 'gemini-1.0-pro'
+#good model
+# model_name = 'gemini-1.0-pro-001'
+#idiot model
+# model_name = 'gemini-pro'
 generation_config = {
   "temperature": 0.0,
   "top_p": 1,
@@ -32,14 +51,7 @@ safety_settings = [
     "threshold": "BLOCK_ONLY_HIGH"
   },
 ]
-#best model
-model_name = 'gemini-1.0-pro-latest'
-#quite straightforward - not eq
-# model_name = 'gemini-1.0-pro'
-#good model
-# model_name = 'gemini-1.0-pro-001'
-#idiot model
-# model_name = 'gemini-pro'
+
 
 model = genai.GenerativeModel(model_name=model_name,
                               generation_config=generation_config,
